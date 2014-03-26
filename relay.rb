@@ -11,6 +11,7 @@ organization = ENV['FLOWDOCK_RELAY_ORGANIZATION']
 flows_to_relay = eval(ENV['FLOWDOCK_RELAY_FLOWS_TO_RELAY'])
 target_flow_api_token = ENV['FLOWDOCK_RELAY_TARGET_FLOW_TOKEN']
 get_users_from_flow_name = ENV['FLOWDOCK_RELAY_USERS_FLOW']
+only_relay_messages_with_tags = (ENV['FLOWDOCK_RELAY_ONLY_WITH_TAGS'] == "true")
 
 # -- get users
 
@@ -56,10 +57,15 @@ flows_to_relay.each do |flow_name|
           message = JSON.parse(line)
 
           if message["event"] == "message"
-            formatted_message = "##{flow_name} #{message['content']}"
+            break if only_relay_messages_with_tags and not message["tags"].any?
+
+            content = message['content']
+            formatted_message = "##{flow_name} #{content}"
             user_name = users_hash[message['user']]
+
             flow = Flowdock::Flow.new(:api_token => target_flow_api_token, :external_user_name => user_name)
             flow.push_to_chat(:content => formatted_message)
+
             puts "#{user_name}: #{formatted_message}"
           end
         end

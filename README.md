@@ -7,5 +7,6 @@ Relays messages from multiple flows to one flow.
   heroku config:set FLOWDOCK_RELAY_FLOWS_TO_RELAY="['flowname1_in_lowercase', 'flowname2_in_lowercase']"
   heroku config:set FLOWDOCK_RELAY_TARGET_FLOW_TOKEN="<token of the flow where messages are relayed>"
   heroku config:set FLOWDOCK_RELAY_USERS_FLOW="<name of the flow to get user names from>"
+  heroku config:set FLOWDOCK_RELAY_ONLY_WITH_TAGS="true"
 
   heroku ps:scale relay=1
