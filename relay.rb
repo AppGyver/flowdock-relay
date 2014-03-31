@@ -12,7 +12,7 @@ flows_to_relay = eval(ENV['FLOWDOCK_RELAY_FLOWS_TO_RELAY'])
 target_flow_api_token = ENV['FLOWDOCK_RELAY_TARGET_FLOW_TOKEN']
 get_users_from_flow_name = ENV['FLOWDOCK_RELAY_USERS_FLOW']
 only_relay_messages_with_tags = (ENV['FLOWDOCK_RELAY_ONLY_WITH_TAGS'] == "true")
-restart_after_seconds = ENV['FLOWDOCK_RELAY_RESTART_AFTER']
+restart_after_seconds = (ENV['FLOWDOCK_RELAY_RESTART_AFTER']).to_i
 
 
 # -- get users
