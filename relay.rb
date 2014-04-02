@@ -4,6 +4,7 @@ require 'json'
 
 require 'flowdock'
 
+
 $stdout.sync = true
 
 token = ENV['FLOWDOCK_RELAY_USER_TOKEN']
@@ -76,6 +77,27 @@ flows_to_relay.each do |flow_name|
   }
 
 end
+
+
+beacon_message = {
+  "namespace" => "flowdock-relay",
+  "metric_name" => "start",
+  "value" => "1",
+  "unit" => "None"
+}
+
+begin
+  status_response = HTTParty.post("http://status-api.appgyver.com/v1/inbound",
+     :body => beacon_message.to_json,
+     :headers => { 'Content-Type' => 'application/json' }
+    )
+
+  puts "posted beacon with status: #{status_response["status"]}"
+
+rescue Exception => ex
+  puts "error when posting to status-api"
+end
+
 
 puts "Running for #{restart_after_seconds}s"
 sleep restart_after_seconds
