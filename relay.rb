@@ -77,8 +77,6 @@ flows_to_relay.each do |flow_name|
 
 end
 
-while true do
-  puts "Running for #{restart_after_seconds}s"
-  sleep restart_after_seconds
-  puts "exiting after #{restart_after_seconds}s"
-end
+puts "Running for #{restart_after_seconds}s"
+sleep restart_after_seconds
+puts "exiting after #{restart_after_seconds}s"
